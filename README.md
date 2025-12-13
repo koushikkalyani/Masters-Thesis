@@ -1,0 +1,1 @@
+Master_thesis_3d_models folder contains all 3d models used for the multisensor setup. ".stl" files are provided, convert it to ".gcode" for printing using Ultimaker Cura, download it here -->"https://ultimaker.com/software/ultimaker-cura/".
