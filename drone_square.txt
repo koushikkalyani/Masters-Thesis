@@ -1,0 +1,36 @@
+from codrone_edu.drone import Drone
+import time
+ 
+# --- CONFIG ---
+SPEED = 25        # forward/sideward speed
+SIDE_TIME = 3.0   # seconds to cover ~2 meters (calibrate this for your drone)
+LAPS = 1          # how many times to repeat the square
+ 
+# --- helper ---
+def move_dir(drone, pitch=0, roll=0, dur=1.0):
+    drone.set_pitch(pitch)
+    drone.set_roll(roll)
+    drone.move(dur)
+    drone.set_pitch(0)
+    drone.set_roll(0)
+    time.sleep(0.2)
+ 
+# --- mission ---
+drone = Drone()
+try:
+    print("Pairing…"); drone.pair()
+    print("Takeoff…"); drone.takeoff()
+    print("Hovering…")
+    drone.hover(1.0)   # initial hover
+    time.sleep(1.0)    # wait for 1 second
+    for lap in range(LAPS):
+        print(f"Lap {lap+1} / {LAPS}")
+        move_dir(drone, pitch=+SPEED, roll=0, dur=SIDE_TIME)   # forward
+        move_dir(drone, pitch=0, roll=+SPEED, dur=SIDE_TIME)   # right
+        move_dir(drone, pitch=-SPEED, roll=0, dur=SIDE_TIME)   # backward
+        move_dir(drone, pitch=0, roll=-SPEED, dur=SIDE_TIME)   # left
+    print("Landing…")
+    drone.land()
+finally:
+    drone.close()
+    print("Closed connection.")

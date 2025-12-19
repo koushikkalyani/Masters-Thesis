@@ -1,0 +1,12 @@
+from codrone_edu.drone import *
+import time
+drone = Drone()
+drone.pair()
+drone.takeoff()
+# Simulate wider circular motion
+for _ in range(150):  # Duration: 115 steps × 0.1s = ~11.5 seconds
+    drone.set_roll(40)     # Increased roll = larger radius
+    drone.set_yaw(30)      # Adjusted yaw for smoother arc
+    drone.move(0.5)
+drone.land()
+drone.close()
